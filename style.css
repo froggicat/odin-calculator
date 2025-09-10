@@ -14,12 +14,14 @@
     margin-top: 50px;
     width: 500px;
     height: 150px;
+    color: pink;
+    font-size: 70px;
 }
 
 button {
     width: 100px;
     height: 100px;
-    margin: 25px 15px;
+    margin: 20px 15px;
     border-width: 5px;
     border-color: white;
     border-radius: 10px;
@@ -27,4 +29,9 @@ button {
     color: white;
     font-size: 50px;
     border-style: solid;
+}
+
+#clear {
+    font-size: 35px;
+    text-align: center;
 }
