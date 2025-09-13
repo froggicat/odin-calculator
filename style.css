@@ -9,13 +9,18 @@
     align-items: center;
 }
 
-#screen {
+.display {
     background-color: white;
     margin-top: 50px;
     width: 500px;
     height: 150px;
     color: pink;
     font-size: 70px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
 }
 
 button {
@@ -29,6 +34,7 @@ button {
     color: white;
     font-size: 50px;
     border-style: solid;
+    cursor: pointer;
 }
 
 #clear {
