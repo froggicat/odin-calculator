@@ -1,93 +1,98 @@
-let num1 = "";
+// first three empty variables
+let firstNumber = "";
 let operator = "";
-let num2 = "";
+let secondNumber = "";
+// calling the display to the DOM
+let display = document.querySelector("#display");
+// empty variable that stores the content in the display
+let displayContent = "0";
+// bring all buttons into the DOM 
+let buttons = document.querySelectorAll("button")
+//bring the clear button into Dom 
+let clear = document.querySelector("#clear");
 
 function add(a, b) {
-    return result = a + b;
+    return a + b;
 }
 
 function subtract(a, b) {
-    return result = a - b;
+    return a - b;
 }
 
 function multiply(a, b) {
-    return result = a * b;
+    return a * b;
 }
 
 function divide(a, b) {
-    return result = a / b;
-}
-
-function operate(num1, operator, num2) {
-    num1 = Number(num1);
-    num2 = Number(num2);
-
-    if (operator == "+") {
-        return add(num1, num2);
-    } else if (operator == "-") {
-        return subtract(num1, num2);
-    } else if (operator == "*") {
-        return multiply(num1, num2);
-    } else if (operator == "/") {
-        if (num2 == "0") {
-            return "Error";
-        }
-        return divide(num1, num2);
+    if (b === 0) {
+        return "Error: Cannot divide by 0.";
+    } else {
+        return a / b;
     }
 }
 
-const display = document.querySelector(".display");
-let displayContent = "0";
-
-function updateDisplay(value) {
-    const nums = "01234567890";
-    const operators = "+-*/"
-    
-    if (nums.includes(value)) {
-        if (operator === "") {
-            num1 += value;
-        } else {
-            num2 += value;
-        }
-        displayContent += value
-    } else if (operators.includes(value) && num1 !== "") {
-        if (operator === "") {
-            operator = value;
-            displayContent += value;
-        }
-    } else if (value === "=") {
-        const result = operate(Number(num1), operator, Number(num2));
-        if (result != null) {
-            displayContent = result.toString();
-            num1 = result.toString();
-            num2 = "";
-            operator = "";
-            clearDisplay();
-        }
+function operate(firstNum, operator, secondNum) {
+    if (operator === "+") {
+        return add(firstNum, secondNum);
+    } else if (operator === "-") {
+        return subtract(firstNum, secondNum);
+    } else if (operator === "*") {
+        return multiply(firstNum, secondNum);
+    } else {
+        return divide(firstNum, secondNum);
     }
-
-    display.textContent = displayContent;
 }
 
 function clearDisplay() {
-    displayContent = "";
-    display.textContent = displayContent;
+    displayContent = "0";
+    display.innerHTML = displayContent;
+    firstNumber = "";
+    operator = "";
+    secondNumber = "";
+    //set everything to empty basically
 }
 
-const buttons = document.querySelectorAll(".num") 
+function populateDisplay(value) {
+    let nums = "0123456789";
+    let operators = "+-/*";
 
+    if (displayContent === "0") {
+        displayContent = value;
+    } else {
+        displayContent += value;
+    }
+
+    if (nums.includes(value)) {
+        //if theres no operator yet add it to firstNumber
+        if (operator === "") {
+            firstNumber += value;
+        } else {
+            //if there is an operator add it to secondNumber
+            secondNumber += value;
+        }
+
+    } else if(operators.includes(value)) {
+        operator = value
+
+    } else if (value === "=") {
+        result = operate(Number(firstNumber), operator, Number(secondNumber));
+        displayContent = result;
+        firstNumber = String(result);
+        secondNumber = "";
+        operator = "";
+    }
+
+    display.innerHTML = displayContent;
+}
+
+//add event listeners to all the buttons to put them in the display
 buttons.forEach(button => {
     button.addEventListener("click", () => {
-        updateDisplay(button.innerText);
+        populateDisplay(button.innerHTML);
     })
-})
+});
 
-const clear = document.querySelector("#clear");
-
-clear.addEventListener("click", clearDisplay);
-
-const equal = document.querySelector("#equals");
-
-equal.addEventListener("click", () => {
-    updateDisplay("=");
+//add another event listener specifically to the clear button to make it clear everything
+clear.addEventListener("click", () => {
+    clearDisplay();
 })
